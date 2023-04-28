@@ -1,0 +1,20 @@
+import pandas as pd
+import yfinance as yf
+import matplotlib.pyplot as plt
+
+def make_graph(stock_data, title):
+    plt.figure(figsize=(10, 6))
+    plt.plot(stock_data['Date'], stock_data['Close'])
+    plt.xlabel('Data')
+    plt.ylabel('Preço de Fechamento ($)')
+    plt.title(title)
+    plt.grid(True)
+    plt.xticks(rotation=45)
+    plt.show()
+
+tesla = yf.Ticker("TSLA")
+tesla_data = tesla.history(period="max")
+tesla_data.reset_index(inplace=True)
+
+make_graph(tesla_data, 'Dados das Ações da Tesla')
+
