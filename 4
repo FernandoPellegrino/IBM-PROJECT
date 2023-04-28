@@ -1,0 +1,13 @@
+import pandas as pd
+
+# Criar um DataFrame com os dados
+data = {'Date': ['2006-01-31', '2005-10-31', '2005-07-31', '2005-04-30', '2005-01-31'],
+        'Revenue': [1667, 534, 416, 475, 709]}
+
+df = pd.DataFrame(data)
+
+# Definir os índices do DataFrame para começar em 59
+df.index = [59, 60, 61, 62, 63]
+
+# Exibir o DataFrame
+print(df)
