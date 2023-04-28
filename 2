@@ -1,0 +1,42 @@
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+def get_tesla_revenue():
+    url = 'https://finance.yahoo.com/quote/TSLA/financials?p=TSLA'
+    
+    response = requests.get(url)
+    
+    if response.status_code == 200:
+        soup = BeautifulSoup(response.content, 'html.parser')
+        
+        table = soup.find('div', {'data-test': 'fin-row'})
+        
+        dates = []
+        revenues = []
+        
+        for row in table.find_all('div', {'data-test': 'fin-col'}):
+            date = row.find('span').text.strip()
+            revenue = row.find_next('span').text.strip()
+            
+            dates.append(date)
+            revenues.append(revenue)
+        
+        dates.reverse()
+        revenues.reverse()
+        
+        df = pd.DataFrame({'Date': dates, 'Revenue': revenues})
+        
+        return df
+    
+    return None
+
+tesla_revenue = get_tesla_revenue()
+
+if tesla_revenue is not None:
+    tail_df = tesla_revenue.tail(5)
+    print(tail_df)
+
+    tail_df.to_csv('tesla_revenue_tail.csv', index=False)
+else:
+    print('Erro ao obter os dados de receita da Tesla.')
