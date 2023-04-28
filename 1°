@@ -1,0 +1,16 @@
+
+import pandas as pd
+import yfinance as yf
+
+# Criar um objeto Ticker para o símbolo da ação desejada (neste caso, "TSLA" para Tesla)
+tesla = yf.Ticker("TSLA")
+
+# Buscar dados históricos da ação para o período especificado (neste caso, "max" para todos os dados disponíveis)
+tesla_data = tesla.history(period="max")
+
+# Resetar o índice do DataFrame
+tesla_data.reset_index(inplace=True)
+
+# Exibir as primeiras linhas do DataFrame
+print(tesla_data.head())
+
